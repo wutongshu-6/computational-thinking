@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算思维及其在时序分析中的应用</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">   
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #FFFFFF;
+        }
+        .card {
+            background-color: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 1.25rem; /* 20px */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            overflow: hidden;
+            position: relative;
+        }
+        .highlight-gradient-blue {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0), rgba(59, 130, 246, 0.05));
+        }
+        .highlight-gradient-green {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0), rgba(16, 185, 129, 0.05));
+        }
+        .highlight-gradient-purple {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0), rgba(139, 92, 246, 0.05));
+        }
+        .highlight-gradient-amber {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0), rgba(245, 158, 11, 0.05));
+        }
+        .highlight-gradient-red {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0), rgba(239, 68, 68, 0.05));
+        }
+        .highlight-gradient-cyan {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0), rgba(6, 182, 212, 0.05));
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <div class="max-w-7xl mx-auto p-4 md:p-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
+            <!-- 标题卡片 -->
+            <div class="card md:col-span-4 md:row-span-2 p-8 flex flex-col justify-center relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-blue"></div>
+                <div class="relative">
+                    <div class="text-sm font-medium text-blue-500 mb-2">Computational Thinking & Time Series Analysis</div>
+                    <h1 class="text-4xl md:text-6xl font-black text-gray-800 leading-tight mb-4">计算思维及其在时序分析中的应用</h1>
+                    <p class="text-lg text-gray-600 max-w-3xl">探索计算思维的核心概念、方法论及其在时序数据分析领域的实际应用</p>
+                </div>
+            </div>
+
+            <!-- 计算思维概念卡片 -->
+            <div class="card md:col-span-2 md:row-span-1 p-6 flex flex-col justify-center relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-green"></div>
+                <div class="relative">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-lightbulb text-green-500 text-xl mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">计算思维概念</h2>
+                    </div>
+                    <p class="text-gray-600">2006年由卡内基·梅隆大学周以真教授首次提出，标志着计算机科学从技术工具向思维方式的重要转变。</p>
+                </div>
+            </div>
+
+            <!-- 周以真教授卡片 -->
+            <div class="card md:col-span-2 md:row-span-1 p-6 flex items-center relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-purple"></div>
+                <div class="relative flex items-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-user-tie text-purple-500 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-800">Jeannette M. Wing</h3>
+                        <p class="text-gray-600">美国卡内基·梅隆大学计算机科学系主任</p>
+                        <p class="text-gray-600">美国国家科学基金会计算机与信息科学与工程部主任</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 计算思维核心特性卡片 -->
+            <div class="card md:col-span-4 md:row-span-2 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-amber"></div>
+                <div class="relative">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">计算思维的核心特性</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white p-4 rounded-lg border border-gray-100">
+                            <div class="flex items-center mb-2">
+                                <div class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center mr-2">
+                                    <i class="fas fa-brain text-amber-500 text-sm"></i>
+                                </div>
+                                <h3 class="font-semibold text-gray-800">概念化</h3>
+                            </div>
+                            <p class="text-sm text-gray-600">概念化而非程序化，在抽象的多个层次上思维</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg border border-gray-100">
+                            <div class="flex items-center mb-2">
+                                <div class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center mr-2">
+                                    <i class="fas fa-tools text-amber-500 text-sm"></i>
+                                </div>
+                                <h3 class="font-semibold text-gray-800">根本技能</h3>
+                            </div>
+                            <p class="text-sm text-gray-600">是每一个人为了在现代社会中发挥职能所必须掌握的</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg border border-gray-100">
+                            <div class="flex items-center mb-2">
+                                <div class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center mr-2">
+                                    <i class="fas fa-user text-amber-500 text-sm"></i>
+                                </div>
+                                <h3 class="font-semibold text-gray-800">人类思维</h3>
+                            </div>
+                            <p class="text-sm text-gray-600">是人类求解问题的一条途径，但决非要使人类像计算机那样思考</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg border border-gray-100">
+                            <div class="flex items-center mb-2">
+                                <div class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center mr-2">
+                                    <i class="fas fa-infinity text-amber-500 text-sm"></i>
+                                </div>
+                                <h3 class="font-semibold text-gray-800">数学与工程思维融合</h3>
+                            </div>
+                            <p class="text-sm text-gray-600">既有数学的严谨性，又有工程的实用性</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg border border-gray-100">
+                            <div class="flex items-center mb-2">
+                                <div class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center mr-2">
+                                    <i class="fas fa-lightbulb text-amber-500 text-sm"></i>
+                                </div>
+                                <h3 class="font-semibold text-gray-800">思想而非人造物</h3>
+                            </div>
+                            <p class="text-sm text-gray-600">不仅是软件硬件等人造物，更是一种思维方式</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg border border-gray-100">
+                            <div class="flex items-center mb-2">
+                                <div class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center mr-2">
+                                    <i class="fas fa-globe text-amber-500 text-sm"></i>
+                                </div>
+                                <h3 class="font-semibold text-gray-800">面向所有人和所有领域</h3>
+                            </div>
+                            <p class="text-sm text-gray-600">代表着一种普遍的认识和一类普适的技能</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 计算思维四大基础要素卡片 -->
+            <div class="card md:col-span-2 md:row-span-2 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-red"></div>
+                <div class="relative">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">计算思维四大基础要素</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-red-500 font-bold">1</span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">分解 (Decomposition)</h3>
+                                <p class="text-sm text-gray-600">将复杂而庞大的问题系统地分解为一个个具体的问题单元</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-red-500 font-bold">2</span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">模式识别 (Pattern Recognition)</h3>
+                                <p class="text-sm text-gray-600">识别问题之间和问题内部的相似之处</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-red-500 font-bold">3</span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">抽象 (Abstraction)</h3>
+                                <p class="text-sm text-gray-600">通过削减无关紧要的细节，使事物更容易被理解的过程</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-red-500 font-bold">4</span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800">算法设计 (Algorithm Design)</h3>
+                                <p class="text-sm text-gray-600">在概念上通过一种清晰界定的步骤和顺序获得问题的解决方案</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 时序分析概念卡片 -->
+            <div class="card md:col-span-2 md:row-span-1 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-cyan"></div>
+                <div class="relative">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-chart-line text-cyan-500 text-xl mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">时序分析基础</h2>
+                    </div>
+                    <p class="text-gray-600">时序数据是按时间顺序排列的结构化数据，时序分析旨在识别数据中的模式、趋势和季节性变化，并利用这些信息预测未来值。</p>
+                </div>
+            </div>
+
+            <!-- 时序分析应用卡片 -->
+            <div class="card md:col-span-2 md:row-span-1 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-blue"></div>
+                <div class="relative">
+                    <h3 class="font-semibold text-gray-800 mb-3">时序分析应用领域</h3>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="flex items-center">
+                            <i class="fas fa-chart-area text-blue-500 mr-2"></i>
+                            <span class="text-sm text-gray-600">金融预测</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-industry text-blue-500 mr-2"></i>
+                            <span class="text-sm text-gray-600">工业监控</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-city text-blue-500 mr-2"></i>
+                            <span class="text-sm text-gray-600">智慧城市</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-heartbeat text-blue-500 mr-2"></i>
+                            <span class="text-sm text-gray-600">医疗健康</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 计算思维在时序分析中的应用卡片 -->
+            <div class="card md:col-span-4 md:row-span-2 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-purple"></div>
+                <div class="relative">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">计算思维在时序分析中的应用</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-semibold text-gray-800 mb-2">抽象化思维应用</h3>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• 将复杂现实问题转化为可计算的时序模型</li>
+                                <li>• 从原始数据中提取关键特征</li>
+                                <li>• 建立模型描述时序数据的整体过程</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800 mb-2">算法思维体现</h3>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• 将复杂问题分解为可处理的子问题</li>
+                                <li>• 识别时序数据中的模式和规律</li>
+                                <li>• 设计预测算法和优化策略</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800 mb-2">自动化处理能力</h3>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• 数据清洗、转换、标准化的自动化</li>
+                                <li>• 机器学习模型训练的自动化</li>
+                                <li>• 预测与决策过程的自动化</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800 mb-2">核心思想体现</h3>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• 抽象与自动化的本质应用</li>
+                                <li>• 问题求解思维方式的体现</li>
+                                <li>• 形式化与可执行性的实现</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 时序分析方法图表卡片 -->
+            <div class="card md:col-span-2 md:row-span-2 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-green"></div>
+                <div class="relative h-full flex flex-col">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">时序分析主要方法</h2>
+                    <div class="flex-grow h-full">
+                        <canvas id="methodsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 外卖配送路径优化案例卡片 -->
+            <div class="card md:col-span-2 md:row-span-2 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-amber"></div>
+                <div class="relative">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-motorcycle text-amber-500 text-xl mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">外卖配送路径优化</h2>
+                    </div>
+                    <p class="text-gray-600 mb-4">一个典型的时序分析问题，充分体现了计算思维的各个要素</p>
+                    <div class="space-y-3">
+                        <div class="bg-white p-3 rounded-lg border border-gray-100">
+                            <h3 class="font-semibold text-gray-800 text-sm">问题分解</h3>
+                            <p class="text-xs text-gray-600">订单分配、路径规划、时间窗口管理、动态调整</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg border border-gray-100">
+                            <h3 class="font-semibold text-gray-800 text-sm">抽象建模</h3>
+                            <p class="text-xs text-gray-600">道路网络抽象为图结构，交通状况抽象为权重</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg border border-gray-100">
+                            <h3 class="font-semibold text-gray-800 text-sm">算法应用</h3>
+                            <p class="text-xs text-gray-600">Dijkstra算法、A*算法、遗传算法、多目标优化</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg border border-gray-100">
+                            <h3 class="font-semibold text-gray-800 text-sm">自动化处理</h3>
+                            <p class="text-xs text-gray-600">实时路径更新、订单自动分配、负载均衡</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 编程题目示例卡片 -->
+            <div class="card md:col-span-4 md:row-span-1 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-red"></div>
+                <div class="relative">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-code text-red-500 text-xl mr-3"></i>
+                        <h2 class="text-xl font-bold text-gray-800">编程题目示例</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white p-3 rounded-lg border border-gray-100">
+                            <h3 class="font-semibold text-gray-800 text-sm mb-1">入门级：简单时序统计分析</h3>
+                            <p class="text-xs text-gray-600">分析气温数据，计算统计量，找出异常值，绘制时序图</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg border border-gray-100">
+                            <h3 class="font-semibold text-gray-800 text-sm mb-1">中级：外卖配送路径优化</h3>
+                            <p class="text-xs text-gray-600">实现简化版外卖配送路径优化程序，使用Dijkstra或A*算法</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg border border-gray-100">
+                            <h3 class="font-semibold text-gray-800 text-sm mb-1">高级：设备故障预测系统</h3>
+                            <p class="text-xs text-gray-600">基于传感器数据预测设备故障，实现故障预警功能</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 总结卡片 -->
+            <div class="card md:col-span-4 md:row-span-1 p-6 relative">
+                <div class="absolute top-0 left-0 w-full h-full highlight-gradient-blue"></div>
+                <div class="relative">
+                    <h2 class="text-xl font-bold text-gray-800 mb-3">总结与展望</h2>
+                    <p class="text-gray-600">计算思维与时序分析具有天然的契合性，应用前景广阔。未来，随着人工智能、大数据等技术的发展，计算思维在时序分析中的应用将更加智能化、实时化，并在更多领域发挥重要作用。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    // 时序分析方法图表
+    const ctx = document.getElementById('methodsChart').getContext('2d');
+    const methodsChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['传统统计方法', '机器学习方法', '深度学习方法', '其他方法'],
+            datasets: [{
+                label: '方法数量',
+                data: [3, 3, 3, 3],
+                backgroundColor: [
+                    'rgba(59, 130, 246, 0.6)',
+                    'rgba(16, 185, 129, 0.6)',
+                    'rgba(139, 92, 246, 0.6)',
+                    'rgba(245, 158, 11, 0.6)'
+                ],
+                borderColor: [
+                    'rgba(59, 130, 246, 1)',
+                    'rgba(16, 185, 129, 1)',
+                    'rgba(139, 92, 246, 1)',
+                    'rgba(245, 158, 11, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 5,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const labels = {
+                                0: 'ARIMA、SARIMA、指数平滑法',
+                                1: 'SVM、GPR、ANFIS',
+                                2: 'LSTM、GRU、CNN',
+                                3: 'VAR、DTW、Prophet'
+                            };
+                            return labels[context.dataIndex];
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+</html>
